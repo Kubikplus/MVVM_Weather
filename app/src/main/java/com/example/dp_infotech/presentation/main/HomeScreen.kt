@@ -31,11 +31,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            items(state.cities) { country ->
+            items(state.cities) { city ->
                 TwoCellRow(
-                    country = country.name ?: "",
+                    country = city.name ?: "",
                     modifier = Modifier.clickable {
-                        navController.navigate(Screens.Details.route + "?cityId=${country.id}")
+                        navController.navigate(Screens.Details.route + "?cityId=${city.id}")
                     }
                 )
             }

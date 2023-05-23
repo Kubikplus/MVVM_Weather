@@ -8,9 +8,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.dp_infotech.presentation.details.DetailsScreen
 import com.example.dp_infotech.presentation.main.HomeScreen
 import com.example.dp_infotech.presentation.utils.Screens
 import com.example.dp_infotech.ui.theme.DP_InfotechTheme
@@ -29,14 +32,16 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(navController=navController)
                         }
                         composable(
-                            route = Screens.Details.route
-//                            arguments = listOf(
-//                                navArgument("cityId") { type = NavType.IntType }
-//                            )
+                            route = Screens.Details.route + "?cityId={cityId}",
+                            arguments = listOf(
+                                navArgument(name = "cityId") {
+                                    type = NavType.StringType
+                                    defaultValue  = "null"
+                                },
+                            )
                         ) {
-//                            val arguments = requireNotNull(backStackEntry.arguments)
-//                            val cityId = arguments.getInt("cityId")
-//                            DetailsScreen(navController = navController, cityId = cityId)
+                            val cityId = it.arguments?.getString("cityId") ?: "null"
+                            DetailsScreen(navController = navController, cityId = cityId)
                         }
 
                     }

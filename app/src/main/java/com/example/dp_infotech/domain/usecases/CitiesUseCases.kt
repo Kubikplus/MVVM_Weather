@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class CityUseCases @Inject constructor(private val repository: CityRepository) {
+class CitiesUseCases @Inject constructor(private val repository: CityRepository) {
     operator fun invoke(): Flow<List<City>> = flow {
         try {
             val cities = repository.getCities()

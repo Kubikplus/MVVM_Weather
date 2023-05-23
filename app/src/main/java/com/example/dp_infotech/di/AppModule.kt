@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.example.dp_infotech.data.RepoImplement
 import com.example.dp_infotech.domain.repository.CityRepository
-import com.example.dp_infotech.domain.usecases.CityUseCases
-import com.example.dp_infotech.domain.usecases.GetCities
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +22,6 @@ object AppModule {
     fun provideNoteRepository(context: Context): CityRepository {
         return RepoImplement(context)
     }
+
 
 }
