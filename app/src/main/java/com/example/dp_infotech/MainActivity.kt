@@ -25,34 +25,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DP_InfotechTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    val navController = rememberNavController( )
-                    NavHost(navController = navController, startDestination = Screens.Home.route ){
-                        composable(route = Screens.Home.route){
-                            HomeScreen(navController=navController)
-                        }
-                        composable(
-                            route = Screens.Details.route + "?cityId={cityId}",
-                            arguments = listOf(
-                                navArgument(name = "cityId") {
-                                    type = NavType.StringType
-                                    defaultValue  = "null"
-                                },
-                            )
-                        ) {
-                            val cityId = it.arguments?.getString("cityId") ?: "null"
-                            DetailsScreen()
-                        }
-
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Screens.Home.route) {
+                    composable(route = Screens.Home.route) {
+                        HomeScreen(navController = navController)
+                    }
+                    composable(
+                        route = Screens.Details.route + "?cityId={cityId}",
+                        arguments = listOf(
+                            navArgument(name = "cityId") {
+                                type = NavType.StringType
+                                defaultValue = "null"
+                            },
+                        )
+                    ) {
+                        val cityId = it.arguments?.getString("cityId") ?: "null"
+                        DetailsScreen()
                     }
 
                 }
+
 
             }
         }
     }
 }
-
 
 
 @Composable

@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailScreenViewModel @Inject constructor(
-    private val cityUseCases: GetCityUseCases,private val weather: WeatherRepository,
+    private val cityUseCases: GetCityUseCases, private val weather: WeatherRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = mutableStateOf(WeatherDetailState())
@@ -31,14 +31,23 @@ class DetailScreenViewModel @Inject constructor(
     }
 
     private fun getCity(cityId: String) {
-        cityUseCases(cityId)?.onEach{
+        cityUseCases(cityId)?.onEach {
             _state.value = WeatherDetailState(city = it)
         }?.launchIn(viewModelScope)
     }
 
-    private fun getWeather(lat:Double,lon:Double){
+    private fun getWeather(lat: Double, lon: Double) {
         viewModelScope.launch {
-            _state.value = _state.value.copy(weatherInfo = weather.getWeatherData(lat,lon))
+            _state.value = _state.value.copy(isLoading = true)
+            try {
+                _state.value = _state.value.copy(
+                    weatherInfo = weather.getWeatherData(lat, lon), isLoading = false
+                )
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(isLoading = false)
+            }
+
+
         }
     }
 

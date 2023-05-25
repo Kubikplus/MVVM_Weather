@@ -3,8 +3,8 @@ package com.example.dp_infotech.presentation.main
 import com.example.dp_infotech.data.model.city.City
 
 data class WeatherState(
-    val cities:List<City> = emptyList(),
+    var cities:List<City> = emptyList(),
     val filteredCities: List<City> = emptyList(),
-    val searchQuery: String = "Kyiv",
+    val searchQuery: String = "",
     var isLoading:Boolean = false
 )

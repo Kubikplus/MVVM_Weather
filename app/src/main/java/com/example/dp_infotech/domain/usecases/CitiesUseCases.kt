@@ -9,13 +9,15 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class CitiesUseCases @Inject constructor(private val repository: CityRepository) {
-    operator fun invoke(): Flow<List<City>> = flow {
-        try {
-            val cities = repository.getCities()
-            emit(cities)
+    suspend operator fun invoke(): List<City> {
+        return try {
+            repository.getCities().toList()
         } catch (e: HttpException) {
-            Log.e("Error", "This shit happened")
-            throw e // rethrow the exception to propagate it further if needed
+            Log.e("Error", "An error occurred while fetching cities", e)
+            throw e // Rethrow the exception to propagate it further if needed
+        } catch (e: Exception) {
+            Log.e("Error", "An unexpected error occurred while fetching cities", e)
+            throw e // Rethrow the exception to propagate it further if needed
         }
     }
 }
