@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             val cityId = it.arguments?.getString("cityId") ?: "null"
-                            DetailsScreen(navController = navController, cityId = cityId)
+                            DetailsScreen()
                         }
 
                     }

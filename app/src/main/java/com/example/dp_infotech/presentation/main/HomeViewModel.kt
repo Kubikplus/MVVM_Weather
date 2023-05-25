@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dp_infotech.domain.usecases.CitiesUseCases
+import com.example.dp_infotech.domain.usecases.GetWeather
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +20,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getCountry()
+
     }
 
     private fun getCountry() {
@@ -28,6 +30,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
 }
 
 

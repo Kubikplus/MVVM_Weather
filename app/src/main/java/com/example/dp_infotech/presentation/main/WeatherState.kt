@@ -1,6 +1,6 @@
 package com.example.dp_infotech.presentation.main
 
-import com.example.dp_infotech.data.model.City
+import com.example.dp_infotech.data.model.city.City
 
 data class WeatherState(
     val cities:List<City> = emptyList(),

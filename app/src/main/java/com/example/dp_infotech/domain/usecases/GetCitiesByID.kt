@@ -1,6 +1,6 @@
 package com.example.dp_infotech.domain.usecases
 
-import com.example.dp_infotech.data.model.City
+import com.example.dp_infotech.data.model.city.City
 import com.example.dp_infotech.domain.repository.CityRepository
 import kotlinx.coroutines.flow.Flow
 

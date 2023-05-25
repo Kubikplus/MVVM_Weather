@@ -5,10 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dp_infotech.data.model.City
-import com.example.dp_infotech.domain.usecases.CitiesUseCases
+import com.example.dp_infotech.domain.repository.WeatherRepository
 import com.example.dp_infotech.domain.usecases.GetCityUseCases
-import com.example.dp_infotech.presentation.main.WeatherState
+import com.example.dp_infotech.domain.usecases.GetWeather
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailScreenViewModel @Inject constructor(
-    private val cityUseCases: GetCityUseCases,
+    private val cityUseCases: GetCityUseCases,private val weather: WeatherRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = mutableStateOf(WeatherDetailState())
@@ -26,6 +25,7 @@ class DetailScreenViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>("cityId")?.let { cityId ->
             getCity(cityId)
+            getWeather(_state.value.city!!.coord.lat, _state.value.city!!.coord.lon)
 
         }
     }
@@ -34,8 +34,12 @@ class DetailScreenViewModel @Inject constructor(
         cityUseCases(cityId)?.onEach{
             _state.value = WeatherDetailState(city = it)
         }?.launchIn(viewModelScope)
+    }
 
-
+    private fun getWeather(lat:Double,lon:Double){
+        viewModelScope.launch {
+            _state.value = _state.value.copy(weatherInfo = weather.getWeatherData(lat,lon))
+        }
     }
 
 
